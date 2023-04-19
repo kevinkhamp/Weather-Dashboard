@@ -1,1 +1,14 @@
-var weatherAPI = 'https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid=cae12e67d49dd4be16803c43f60b9f83'
+$(document).ready(function () {
+
+var dateEl = $('#date')
+var currentWeatherEl = $('#current-weather-item')
+var cityEl = $('#city')
+var weatherForecast = $('#future-weather')
+
+setInterval(() => {
+    var time= new Date()
+    var date = time.getDate()
+
+}, 1000)
+
+})
