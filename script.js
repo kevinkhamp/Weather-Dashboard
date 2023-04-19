@@ -1,12 +1,16 @@
 $(document).ready(function () {
 
+var APIKey = 'cae12e67d49dd4be16803c43f60b9f83'
+
 var dateEl = $('#date')
 var currentWeatherEl = $('#current-weather-item')
+var searchEl = $('#searchBtn')
 var cityEl = $('#city')
 var weatherForecast = $('#future-weather')
 
 // Today's date
 $(function(){
+    // JS date method
     var today = new Date()
     var date = today.getDate()
     var month = today.getMonth() + 1
@@ -59,4 +63,37 @@ $(function(){
     var format = month + "/" + date + "/" + year
     $('.date5').text('('+ format + ')')
 })
+
+var pastSearches = []
+
+if (localStorage['pastSearches']) {
+    pastSearches = JSON.parse(localStorage['pastSearches'])
+}
+
+if (pastSearches.indexOf(search) == -1) {
+    pastSearches.unshift(search)
+    if (pastSearches.length > 8) {
+        pastSearches.pop()
+    }
+    localStorage['pastSearches'] = JSON.stringify(pastSearches)
+}
+
+$('.searchBtn').on('click', function() {
+    var event = $(this).prev().val().toLowerCase()
+    localStorage.setItem('City', JSON.stringify(event))
+})
+
+
+//Get weather data (come back later)
+// function getWeatherData() {
+//     fetch('https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid='+ APIKey) 
+//     .then(function(response) {
+//     return response.json()
+//     })
+//     .then(function (data) {
+//     console.log(data)
+//     })
+// }
+
+// getWeatherData()
 })
