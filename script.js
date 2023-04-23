@@ -1,12 +1,8 @@
 $(document).ready(function () {
 
 var APIKey = 'cae12e67d49dd4be16803c43f60b9f83'
-
 var dateEl = $('#date')
-var currentWeatherEl = $('#current-weather-item')
-var searchEl = $('#searchBtn')
-var cityEl = $('#city')
-var weatherForecast = $('#future-weather')
+var inputEl = $('.search')
 
 // Today's date
 $(function(){
@@ -64,29 +60,38 @@ $(function(){
     $('.date5').text('('+ format + ')')
 })
 
-var pastSearches = []
-
-if (localStorage['pastSearches']) {
-    pastSearches = JSON.parse(localStorage['pastSearches'])
-}
-
-if (pastSearches.indexOf(search) == -1) {
-    pastSearches.unshift(search)
-    if (pastSearches.length > 8) {
-        pastSearches.pop()
-    }
-    localStorage['pastSearches'] = JSON.stringify(pastSearches)
-}
-
+function getLatLong() {
 $('.searchBtn').on('click', function() {
-    var event = $(this).prev().val().toLowerCase()
-    localStorage.setItem('City', JSON.stringify(event))
-})
+    var event = $(this).prev().val()
+    localStorage.setItem("Search",JSON.stringify(event))
+ 
+    fetch ('http://api.openweathermap.org/geo/1.0/direct?q=' + inputEl.val() + '&limit=5&appid=' + APIKey, {
+        method: 'GET',
+        credentials: 'same-origin',
+        redirect: 'follow'
+    })
+    .then(function(response) {
+        return response.json()
+    })
+    .then(function(data) {
+        console.log(data[0])
+
+        $('.city').text(data[0].name)
+        console.log(data[0].lat, data[0].lon)
+    })
+})}
+
+getLatLong()
 
 
-//Get weather data (come back later)
+// Get weather data (come back later)
 // function getWeatherData() {
-//     fetch('https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid='+ APIKey) 
+    
+//     fetch('https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid='+ APIKey, {
+//         method: 'GET',
+//         credentials: 'same-origin',
+//         redirect: 'follow'
+//     })
 //     .then(function(response) {
 //     return response.json()
 //     })
@@ -95,5 +100,6 @@ $('.searchBtn').on('click', function() {
 //     })
 // }
 
-// getWeatherData()
+// 
+
 })
