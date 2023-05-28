@@ -59,6 +59,8 @@ $(function(){
     var format = month + "/" + date + "/" + year
     $('.date5').text('('+ format + ')')
 })
+getLatLong()
+// showWeatherData()
 
 function getLatLong() {
 $('.searchBtn').on('click', function() {
@@ -70,36 +72,72 @@ $('.searchBtn').on('click', function() {
         credentials: 'same-origin',
         redirect: 'follow'
     })
-    .then(function(response) {
-        return response.json()
-    })
-    .then(function(data) {
-        console.log(data[0])
+    .then(response =>  response.json())
+    .then(data => {
+        // console.log(data[0])
 
         $('.city').text(data[0].name)
-        console.log(data[0].lat, data[0].lon)
+        // console.log(data[0].lat, data[0].lon)
+
+        var latData = data[0].lat
+        var lonData = data[0].lon
+        showWeatherData(latData,lonData)
+
     })
-})}
 
-getLatLong()
+    function showWeatherData(latData, lonData) {
 
-
-// Get weather data (come back later)
-// function getWeatherData() {
+        fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latData}&lon=${lonData}&appid=` + APIKey, {
+            method: 'GET',
+            credentials: 'same-origin',
+            redirect: 'follow'
+        })
+        .then(response => response.json())
+        .then(data => {
+        console.log(data.list)
+        console.log(data.list[0].weather)
     
-//     fetch('https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid='+ APIKey, {
+        // $('.w-icon') = `${data.list[0].weather[0].icon}`
+        // $('.todayTemp') = `Temp: ${data.list[0].main.temp}`
+        for (let i = 0; i < 6; i++) {
+            document.getElementById("temp"+i).innerHTML = "Temp: " + Number(data.list[i].main.temp - 215).toFixed(2)+"°"
+        }
+        // $('.todayWind') = `Wind: ${data.list[0].wind.speed}`
+        for (let i = 0; i < 6; i++) {
+            document.getElementById("wind"+i).innerHTML = "Wind: " + Number(data.list[0].wind.speed).toFixed(2) + 'mph'
+        }
+        // $('.todayHumid') = `Humidity: ${data.list[0].main.humidity}`
+        for (let i = 0; i < 6; i++) {
+            document.getElementById("humid"+i).innerHTML = "Humidity: " + Number(data.list[0].main.humidity).toFixed(0)
+        }
+    })
+    }})
+}
+
+// function showWeatherData(latData, lonData) {
+
+//     fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latData}&lon=${lonData}&appid=` + APIKey, {
 //         method: 'GET',
 //         credentials: 'same-origin',
 //         redirect: 'follow'
 //     })
-//     .then(function(response) {
+//     .then(function(response){
 //     return response.json()
 //     })
-//     .then(function (data) {
-//     console.log(data)
-//     })
-// }
+//     .then(function(data){
+//     console.log(data.list)
+//     console.log(data.list[0].weather)
 
-// 
+//     // $('.w-icon') = `${data.list[0].weather[0].icon}`
+//     // $('.todayTemp') = `Temp: ${data.list[0].main.temp}`
+//     for (let i = 0; i < 5; i++) {
+//         $("day"+i+"temp").text('Temp: ' + data.list[i].main.temp)
+//     }
+//     // $('.todayWind') = `Wind: ${data.list[0].wind.speed}`
+//     // $('.todayHumid') = `Humidity: ${data.list[0].main.humidity}`
+
+    
+// })
+// }
 
 })
