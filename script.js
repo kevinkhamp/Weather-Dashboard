@@ -98,6 +98,9 @@ $('.searchBtn').on('click', function() {
         console.log(data.list[0].weather)
     
         // $('.w-icon') = `${data.list[0].weather[0].icon}`
+        for (let i = 0; i < 6; i++) {
+            document.getElementById("w-icon"+i).src = "http://openweathermap.org/img/wn/" + data.list[i].weather[0].icon + '.png'
+        }
         // $('.todayTemp') = `Temp: ${data.list[0].main.temp}`
         for (let i = 0; i < 6; i++) {
             document.getElementById("temp"+i).innerHTML = "Temp: " + Number(data.list[i].main.temp - 215).toFixed(2)+"°"
@@ -114,30 +117,8 @@ $('.searchBtn').on('click', function() {
     }})
 }
 
-// function showWeatherData(latData, lonData) {
-
-//     fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latData}&lon=${lonData}&appid=` + APIKey, {
-//         method: 'GET',
-//         credentials: 'same-origin',
-//         redirect: 'follow'
-//     })
-//     .then(function(response){
-//     return response.json()
-//     })
-//     .then(function(data){
-//     console.log(data.list)
-//     console.log(data.list[0].weather)
-
-//     // $('.w-icon') = `${data.list[0].weather[0].icon}`
-//     // $('.todayTemp') = `Temp: ${data.list[0].main.temp}`
-//     for (let i = 0; i < 5; i++) {
-//         $("day"+i+"temp").text('Temp: ' + data.list[i].main.temp)
-//     }
-//     // $('.todayWind') = `Wind: ${data.list[0].wind.speed}`
-//     // $('.todayHumid') = `Humidity: ${data.list[0].main.humidity}`
-
-    
-// })
+// function addToLS(city) {
+//     const listEl = 
 // }
 
 })
