@@ -43,3 +43,11 @@ button {
 .city {
   font-weight: bold;
 }
+
+li {
+  list-style-type: none;
+}
+
+.list-city-item {
+  margin: 5px;
+}

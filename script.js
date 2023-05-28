@@ -60,13 +60,12 @@ $(function(){
     $('.date5').text('('+ format + ')')
 })
 getLatLong()
-// showWeatherData()
 
 function getLatLong() {
 $('.searchBtn').on('click', function() {
+
     var event = $(this).prev().val()
-    localStorage.setItem("Search",JSON.stringify(event))
- 
+    
     fetch ('http://api.openweathermap.org/geo/1.0/direct?q=' + inputEl.val() + '&limit=5&appid=' + APIKey, {
         method: 'GET',
         credentials: 'same-origin',
@@ -94,8 +93,8 @@ $('.searchBtn').on('click', function() {
         })
         .then(response => response.json())
         .then(data => {
-        console.log(data.list)
-        console.log(data.list[0].weather)
+        // console.log(data.list)
+        // console.log(data.list[0].weather)
     
         // $('.w-icon') = `${data.list[0].weather[0].icon}`
         for (let i = 0; i < 6; i++) {
@@ -113,12 +112,16 @@ $('.searchBtn').on('click', function() {
         for (let i = 0; i < 6; i++) {
             document.getElementById("humid"+i).innerHTML = "Humidity: " + Number(data.list[0].main.humidity).toFixed(0)
         }
+        history(event)
     })
-    }})
+    }
+
+    function history(event) {
+        const listEl = $("<button>" + event.toUpperCase() + '</button> <br>')
+        $(listEl).attr('class', 'list-city-item')
+        $(listEl).attr('data-val', event.toUpperCase())
+        $('.list-city').append(listEl)
+    }
+})
 }
-
-// function addToLS(city) {
-//     const listEl = 
-// }
-
 })
