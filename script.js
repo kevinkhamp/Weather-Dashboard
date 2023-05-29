@@ -4,6 +4,8 @@ var APIKey = 'cae12e67d49dd4be16803c43f60b9f83'
 var dateEl = $('#date')
 var inputEl = $('.search')
 
+let searchedCity = []
+
 // Today's date
 $(function(){
     // JS date method
@@ -66,7 +68,7 @@ function getLatLong() {
 $('.searchBtn').on('click', function() {
 
     var event = $(this).prev().val()
-    localStorage.setItem("Search",JSON.stringify(event))
+    // localStorage.setItem("Search",JSON.stringify(event))
     
     fetch ('http://api.openweathermap.org/geo/1.0/direct?q=' + inputEl.val() + '&limit=5&appid=' + APIKey, {
         method: 'GET',
@@ -129,6 +131,23 @@ $('.searchBtn').on('click', function() {
         // console.log(text)
         
     }
+
+    function readLocalStorage() {
+        const city = localStorage.getItem('search')
+        if (city) {
+            city = JSON.parse(city)
+        } else {
+            let city = []
+        }
+        return city
+    }
+
+    function saveToLocalStorage(event) {
+        localStorage.setItem('search', JSON.stringify(event))
+    }
+
+    readLocalStorage(event)
+    saveToLocalStorage(event)
 
     // function searchAgain(city) {
     //     const liEl = event.target
