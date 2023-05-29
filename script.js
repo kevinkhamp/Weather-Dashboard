@@ -60,11 +60,13 @@ $(function(){
     $('.date5').text('('+ format + ')')
 })
 getLatLong()
+// searchAgain()
 
 function getLatLong() {
 $('.searchBtn').on('click', function() {
 
     var event = $(this).prev().val()
+    localStorage.setItem("Search",JSON.stringify(event))
     
     fetch ('http://api.openweathermap.org/geo/1.0/direct?q=' + inputEl.val() + '&limit=5&appid=' + APIKey, {
         method: 'GET',
@@ -113,15 +115,28 @@ $('.searchBtn').on('click', function() {
             document.getElementById("humid"+i).innerHTML = "Humidity: " + Number(data.list[0].main.humidity).toFixed(0)
         }
         history(event)
+        // searchAgain(event)
     })
     }
 
     function history(event) {
         const listEl = $("<button>" + event.toUpperCase() + '</button> <br>')
-        $(listEl).attr('class', 'list-city-item')
-        $(listEl).attr('data-val', event.toUpperCase())
-        $('.list-city').append(listEl)
+            $(listEl).attr('id', 'list-city-item')
+            $(listEl).attr('data-val', event.toUpperCase())
+            $('.list-city').append(listEl)
+
+        // let text = document.getElementById('list-city-item').innerText
+        // console.log(text)
+        
     }
+
+    // function searchAgain() {
+    //     $('#list-city-item').on('click', function() {
+    //         let text = document.getElementById('list-city-item').innerText
+    //         console.log(text)
+    //         getLatLong(text)
+    //     })
+    // }
 })
 }
 })

@@ -48,6 +48,8 @@ li {
   list-style-type: none;
 }
 
-.list-city-item {
+#list-city-item {
   margin: 5px;
+  color: black;
+  background-color: gray;
 }
