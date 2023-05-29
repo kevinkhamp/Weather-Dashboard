@@ -130,12 +130,12 @@ $('.searchBtn').on('click', function() {
         
     }
 
-    // function searchAgain() {
-    //     $('#list-city-item').on('click', function() {
-    //         let text = document.getElementById('list-city-item').innerText
-    //         console.log(text)
-    //         getLatLong(text)
-    //     })
+    // function searchAgain(city) {
+    //     const liEl = event.target
+    //     if (city.target == ('button')) {
+    //         event = liEl.textContent.trim()
+    //         getLatLong(event)
+    //     }
     // }
 })
 }
